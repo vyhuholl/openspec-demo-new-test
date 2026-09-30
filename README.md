@@ -82,19 +82,21 @@ GET /bookings?room=green&date=2027-11-01 возвращает все брони,
 |---|---|---|
 | *TestBase_SingleBooking* | база, Q1 | запрос старого клиента с полем `room` получает 400 |
 | TestRooms_CreatedAndListed | промпт | бронь не видна в выдаче одной из своих комнат; вместо одной брони — по брони на комнату с разными id |
-| TestLegacy_OldClientRequest | Q1 | `room` заменён на `rooms`: запрос старого клиента — 400 |
-| TestLegacy_ResponseKeepsRoom / single_room_via_rooms | Q1 | из ответов POST и GET пропало поле `room` |
-| TestLegacy_ResponseKeepsRoom / old_client_request_gets_rooms_too | Q1 | в ответе на запрос старого клиента нет `rooms` |
-| TestLegacy_ResponseKeepsRoom / room_is_first_of_rooms | Q1 | `room` в ответе — не первая комната из запроса |
+| *TestLegacy_OldClientRequest* | Q1 | `room` заменён на `rooms`: запрос старого клиента — 400 |
+| *TestLegacy_ResponseKeepsRoom / single_room_via_rooms* | Q1 | из ответов POST и GET пропало поле `room` |
+| *TestLegacy_ResponseKeepsRoom / old_client_request_gets_rooms_too* | Q1 | в ответе на запрос старого клиента нет `rooms` |
+| *TestLegacy_ResponseKeepsRoom / room_is_first_of_rooms* | Q1 | `room` в ответе — не первая комната из запроса |
 | TestLegacy_ResponseKeepsRoom / rooms_keep_request_order | Q1 | `rooms` пересортированы |
-| TestLegacy_RoomAndRoomsTogether | Q1 | одно из полей молча побеждает |
-| TestLegacy_ConflictWithMultiRoomBooking | Q1 | брони старых и новых клиентов не видят друг друга |
+| *TestLegacy_RoomAndRoomsTogether* | Q1 | одно из полей молча побеждает |
+| *TestLegacy_ConflictWithMultiRoomBooking* | Q1 | брони старых и новых клиентов не видят друг друга |
 | TestRooms_Conflict_WholeBookingRejected | Q2 | бронь создаётся в свободных комнатах, занятая молча пропускается |
 | TestRooms_DuplicateRooms / same_room_twice, repeat_among_others | Q3 | повтор комнаты молча схлопывается |
 | TestRooms_DuplicateRooms / different_case_is_a_different_room | Q3 | `green` и `Green` считаются одной комнатой |
-| TestRooms_Limit | Q4 | лимита нет или граница сдвинута |
+| *TestRooms_Limit* | Q4 | лимита нет или граница сдвинута |
 | TestRooms_InvalidRequest | Q5 | мягкая валидация `rooms` |
 
 ## Выводы
 * Чистым вайбкодингом агент стабильно ломает старый контракт и переписывает тесты, которые его охраняли (а если и задаёт вопросы, то про косметику). Через OpenSpec видит, что старое поведение зафиксировано в спеке, и спрашивает, нужно ли сохранять совместимость.
-* Каждая ошибка в spec-ветке — незаданный вопрос, и он виден в proposal.md как допущение ещё до кода.
+* Там, где агент задал вопрос во время `/opsx:explore`, код правильный в 100% случаев.
+* Каждая ошибка в spec-ветке — незаданный вопрос, и он виден в `proposal.md` как допущение ещё до кода.
+* Даже если работаете без OpenSpec — как только задача становится хоть сколько-нибудь сложной, нужно обсуждать с агентом реализацию фичи *до* написания кода.
